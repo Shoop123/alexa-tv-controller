@@ -1,4 +1,3 @@
-sftp-config.json
-test_controls.py
-test.py
-graceful_killer.py
+secret.py
+.venv/
+*.pyc

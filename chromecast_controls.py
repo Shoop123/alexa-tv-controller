@@ -1,5 +1,5 @@
-import sys, time, pychromecast
-from constants import CHROMECAST_NAME
+import pychromecast
+from secret import CHROMECAST_NAME
 
 def _get_chromecast():
 	chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[CHROMECAST_NAME])

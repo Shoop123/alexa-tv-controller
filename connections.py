@@ -1,4 +1,7 @@
-import constants, tv_controls, secret, websocket, rel, json, chromecast_controls
+import constants, tv_controls, secret, websocket, json, chromecast_controls
+from threading import Thread
+
+websocket.enableTrace(False)
 
 def on_message(ws, message):
     print(message)
@@ -21,15 +24,6 @@ def on_error(ws, error):
 
 def on_close(ws, close_status_code, close_msg):
     print("### closed ###", close_status_code, close_msg)
-    rel.abort()
-    ws.run_forever(dispatcher=rel,
-               reconnect=2,
-               ping_interval=constants.WEBSOCKET_PING_INTERVAL_SECONDS,
-               ping_timeout=10,
-               ping_payload='Ping'
-            )
-    rel.signal(2, rel.abort)
-    rel.dispatch()
 
 def on_open(ws):
     print('Opened connection')
@@ -40,22 +34,35 @@ def on_ping(wsapp, message):
 def on_pong(wsapp, message):
     print('Got a pong! No need to respond')
 
-websocket.enableTrace(True)
+def start_connection():
+    print('Starting new connection')
 
-ws = websocket.WebSocketApp(secret.WEBSOCKET_ENDPOINT,
-                            on_open=on_open,
-                            on_message=on_message,
-                            on_error=on_error,
-                            on_close=on_close,
-                            on_ping=on_ping,
-                            on_pong=on_pong
-                        )
+    ws = websocket.WebSocketApp(secret.WEBSOCKET_ENDPOINT,
+                                on_open=on_open,
+                                on_message=on_message,
+                                on_error=on_error,
+                                on_close=on_close,
+                                on_ping=on_ping,
+                                on_pong=on_pong
+                            )
 
-ws.run_forever(dispatcher=rel,
-               reconnect=2,
-               ping_interval=constants.WEBSOCKET_PING_INTERVAL_SECONDS,
-               ping_timeout=10,
-               ping_payload='Ping'
-            )
-rel.signal(2, rel.abort) # Keyboard Interrupt
-rel.dispatch()
+    ws.run_forever(reconnect=2,
+                   ping_interval=constants.WEBSOCKET_PING_INTERVAL_SECONDS,
+                   ping_timeout=10,
+                   ping_payload='Ping'
+                )
+
+    print('New connection established')
+
+while True:
+    print('Creating new thread for connection')
+
+    thread = Thread(target=start_connection, daemon=True)
+
+    thread.start()
+
+    print('Thread started')
+
+    thread.join()
+
+    print('Thread closed')

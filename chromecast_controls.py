@@ -27,12 +27,12 @@ def pause_chromecast():
 	chromecast = _get_chromecast()
 
 	if chromecast is not None:
-		chromecast.media_controller.block_until_active()
+		# chromecast.media_controller.block_until_active()
 		chromecast.media_controller.pause()
 		
 def play_chromecast():
 	chromecast = _get_chromecast()
 
 	if chromecast is not None:
-		chromecast.media_controller.block_until_active()
+		# chromecast.media_controller.block_until_active()
 		chromecast.media_controller.play()

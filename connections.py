@@ -1,7 +1,13 @@
-import constants, tv_controls, secret, websocket, json, chromecast_controls
+import constants, tv_controls, secret, websocket, json, chromecast_controls, signal
 from threading import Thread
 
 websocket.enableTrace(False)
+
+def exit_gracefully(signum, frame):
+    tv_controls.cleanup()
+
+signal.signal(signal.SIGINT, exit_gracefully)
+signal.signal(signal.SIGTERM, exit_gracefully)
 
 def on_message(ws, message):
     print(message)
@@ -51,8 +57,6 @@ def start_connection():
                    ping_timeout=10,
                    ping_payload='Ping'
                 )
-
-    print('New connection established')
 
 while True:
     print('Creating new thread for connection')

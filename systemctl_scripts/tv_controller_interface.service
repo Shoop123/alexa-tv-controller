@@ -1,0 +1,14 @@
+[Unit]
+Description=TV Controller Interface
+After=network.target network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+Restart=always
+PIDFile=/var/run/<your_service_name>/service.pid
+ExecStart=/home/pi/Documents/Projects/alexa-tv-controller/.venv/bin/python3 /home/pi/Documents/Projects/alexa-tv-controller/interface.py
+
+[Install]
+WantedBy=multi-user.target

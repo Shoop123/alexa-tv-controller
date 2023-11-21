@@ -4,7 +4,8 @@ from constants import *
 
 GPIO.setmode(GPIO.BCM)
 
-for i in range(len(outputs)):
+for i in range(len(inputs)):
+	GPIO.setup(inputs[i], GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	GPIO.setup(outputs[i], GPIO.OUT)
 
 def toggle_power():
@@ -37,3 +38,7 @@ def adjust_volume(volume_steps):
 			time.sleep(AFTER_SLEEP*3)
 		else:
 			time.sleep(AFTER_SLEEP)
+
+def cleanup():
+	print('Cleaning up')
+	GPIO.cleanup()

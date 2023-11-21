@@ -13,7 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # copy every content from the local file to the image
 COPY . /app
 
-ENTRYPOINT ["python"]
-
 # use '-u' parameter to NOT buffer python output and see it in docker logs
-CMD ["-u", "connections.py"]
+# must be in ENTRYPOINT (not CMD) to receive Docker SIGINT signal on container stop
+ENTRYPOINT ["python", "-u", "connections.py"]

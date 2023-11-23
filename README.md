@@ -34,3 +34,6 @@ Location: `/lib/systemd/system/tv_controller_interface.service`
 See Status: `systemctl status tv_controller_interface.service`
 
 Start: `systemctl start tv_controller_interface.service`
+
+## Rough Design
+![Design diagram](/diagrams/Alexa%20TV%20Controller%20Diagram.jpg)

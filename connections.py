@@ -1,4 +1,4 @@
-import constants, tv_controls, secret, websocket, json, chromecast_controls, signal
+import constants, tv_controls, secret, websocket, json, signal
 from threading import Thread
 
 websocket.enableTrace(False)
@@ -17,13 +17,14 @@ def on_message(ws, message):
         tv_controls.toggle_power()
     elif message_json['action'] == 'volume_step':
         tv_controls.adjust_volume(message_json['volume_steps'])
-    elif message_json['action'] == 'playback_controller':
-        if message_json['playback_action'] == 'Play':
-            chromecast_controls.play_chromecast()
-        elif message_json['playback_action'] == 'Pause':
-            chromecast_controls.pause_chromecast()
-        elif message_json['playback_action'] == 'Stop':
-            chromecast_controls.stop_chromecast()
+    # Chromecase controls not working atm
+    # elif message_json['action'] == 'playback_controller':
+    #     if message_json['playback_action'] == 'Play':
+    #         chromecast_controls.play_chromecast()
+    #     elif message_json['playback_action'] == 'Pause':
+    #         chromecast_controls.pause_chromecast()
+    #     elif message_json['playback_action'] == 'Stop':
+    #         chromecast_controls.stop_chromecast()
 
 def on_error(ws, error):
     print(error)

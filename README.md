@@ -14,11 +14,11 @@
 ## Container Runbook
 ### See Docker Container Logs
 1. Get container id with `docker ps`
-2. Print logs with `docker logs {contaienr_id}`
+2. Print logs with `docker logs {container_id}`
 
 ### Login to Docker Container
 1. Get container id with `docker ps`
-2. Print logs with `docker exec -it {contaienr_id} bash`
+2. Print logs with `docker exec -it {container_id} bash`
 
 ## Running scripts with `systemctl`
 ### home-automation-containers.service
